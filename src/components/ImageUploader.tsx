@@ -24,6 +24,7 @@ export function ImageUploader() {
   const [isDragging, setIsDragging] = useState(false)
   const [uploadedImage, setUploadedImage] = useState<string | null>(null)
   const [generatedImage, setGeneratedImage] = useState<string | null>(null)
+  const [generatedImageId, setGeneratedImageId] = useState<string | null>(null)
   const [description, setDescription] = useState<string | null>(null)
   const [stage, setStage] = useState<Stage>('upload')
   const [error, setError] = useState<string | null>(null)
@@ -92,8 +93,9 @@ export function ImageUploader() {
 
       if (!generateResponse.ok) throw new Error('Failed to generate image')
 
-      const { url } = await generateResponse.json()
+      const { url, imageId } = await generateResponse.json()
       setGeneratedImage(url)
+      setGeneratedImageId(imageId)
       setStage('complete')
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred')
@@ -136,7 +138,6 @@ export function ImageUploader() {
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
     try {
       const response = await fetch('/api/submit-form', {
         method: 'POST',
@@ -146,14 +147,14 @@ export function ImageUploader() {
         body: JSON.stringify({
           formData,
           imageUrl: uploadedImage,
-          generatedImageUrl: generatedImage,
+          generatedImageId,
         }),
       })
-  
+
       if (!response.ok) {
         throw new Error('Failed to submit form')
       }
-  
+
       const result = await response.json()
       
       if (result.success) {
@@ -256,6 +257,7 @@ export function ImageUploader() {
               setStage('upload')
               setUploadedImage(null)
               setGeneratedImage(null)
+              setGeneratedImageId(null)
               setDescription(null)
             }} 
             className="space-x-2"

@@ -43,7 +43,9 @@ export default function LegoMinifigure() {
           <div className="text-center space-y-4">
             <h1 className="text-4xl font-light">Lego Minifigure Generator</h1>
             <p className="text-gray-400 font-light">
-              Upload your photo or take a picture to generate your personalized LEGO minifigure
+              Upload your photo or take a picture to generate your personalized LEGO minifigure!
+              <br/>
+              Submit your information to the sweepstake to win a customized LEGO set with your minifigure.
             </p>
           </div>
           
