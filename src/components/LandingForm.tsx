@@ -27,8 +27,8 @@ export function LandingForm() {
   const options = [
     { id: "option1", label: "Dev Environments (with Docker)" },
     { id: "option1", label: "Dev Environments (with Kubernetes)" },
-    { id: "option3", label: "Developer Experience Index" },
-    { id: "option4", label: "GitHub Actions - faster and cheaper" },
+    { id: "option3", label: "Developer Experience Index (DXI)" },
+    { id: "option4", label: "GitHub Actions (just faster and cheaper)" },
   ]
 
   return (
