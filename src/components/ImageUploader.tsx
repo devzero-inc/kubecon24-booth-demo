@@ -136,8 +136,35 @@ export function ImageUploader() {
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission here
-    setShowForm(false)
+    
+    try {
+      const response = await fetch('/api/submit-form', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          formData,
+          imageUrl: uploadedImage,
+          generatedImageUrl: generatedImage,
+        }),
+      })
+  
+      if (!response.ok) {
+        throw new Error('Failed to submit form')
+      }
+  
+      const result = await response.json()
+      
+      if (result.success) {
+        setShowForm(false)
+        // You might want to show a success message or redirect here
+      } else {
+        throw new Error(result.error || 'Failed to submit form')
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to submit form')
+    }
   }
 
   return (

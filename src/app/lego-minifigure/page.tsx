@@ -1,9 +1,25 @@
 import { ImageUploader } from '../../components/ImageUploader'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function LegoMinifigure() {
   return (
     <main className="min-h-screen bg-black text-white">
+      {/* Logo Container */}
+      <div className="absolute top-8 right-8 md:top-12 md:right-12 z-10">
+        <div className="relative group">
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 blur-xl group-hover:blur-2xl transition-all duration-500 opacity-0 group-hover:opacity-100 rounded-full" />
+          <Image
+            src="https://cdn.prod.website-files.com/659f77ad8e06050cc27ed4d3/662945e3d47abbc448cd338e_Full%20logo%20(colored%20on%20dark).svg"
+            alt="Company Logo"
+            width={140}
+            height={42}
+            priority
+            className="w-auto h-8 md:h-10 relative transition-transform duration-500 group-hover:scale-105"
+          />
+        </div>
+      </div>
+
       {/* Navigation */}
       <nav className="absolute top-0 left-0 right-0 p-6">
         <Link 
@@ -18,7 +34,7 @@ export default function LegoMinifigure() {
           >
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
           </svg>
-          <span>Back to Home</span>
+          <span>Home</span>
         </Link>
       </nav>
 
