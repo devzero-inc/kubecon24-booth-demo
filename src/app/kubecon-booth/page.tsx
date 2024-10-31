@@ -49,7 +49,7 @@ export default function Home() {
               extraordinary
             </h1>
             <p className="text-xl font-light text-gray-400 mb-8 animate-fade-in-up animation-delay-200">
-              Create stunning software with DevZero's modern platform designed to make it easier for developers to focus on what they love to do, build software.
+              Create stunning software with DevZero&apos;s modern platform designed to make it easier for developers to focus on what they love to do, build software.
             </p>
             <div className="space-y-4 animate-fade-in-up animation-delay-400">
               <div className="flex items-center space-x-4 text-gray-400">
