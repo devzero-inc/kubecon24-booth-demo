@@ -24,3 +24,5 @@ jobs:
           context: .
           push: false
           tags: nextjs-app:latest
+          cache-from: type=local,src=/home/devzero/buildx-cache
+          cache-to: type=local,dest=/home/devzero/buildx-cache
