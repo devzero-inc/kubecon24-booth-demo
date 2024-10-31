@@ -17,12 +17,5 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-
       - name: Build Docker image
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          push: false
-          tags: nextjs-app:latest
-          cache-from: type=local,src=/home/devzero/buildx-cache
-          cache-to: type=local,dest=/home/devzero/buildx-cache
+        run: docker build --tag nextjs-app:latest .
