@@ -1,24 +1,27 @@
-import './globals.css'
+'use client'
+
+import { useEffect, useState } from 'react'
 import { Inter } from 'next/font/google'
+import './globals.css'
 
-const inter = Inter({ 
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600']
-})
-
-export const metadata = {
-  title: 'DevZero - KubeCon 2024',
-  description: 'DevZero: The modern software development platform built for developers who love to ship.',
-}
+const inter = Inter({ subsets: ['latin'] })
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        {isMounted ? children : null}
+      </body>
     </html>
   )
 }
