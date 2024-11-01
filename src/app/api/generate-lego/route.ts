@@ -30,7 +30,7 @@ export async function POST(request: Request) {
       )
     }
 
-    const prompt = `Create a LEGO minifigure with these features: ${description}. Style the minifigure as a superstar developer with modern tech-inspired clothing. Ensure the background is clean and solid.`
+    const prompt = `Create a LEGO minifigure with these features: ${description}. Style the minifigure as a superstar or "10x" or "100x" developer with modern tech-inspired clothing. Ensure the background is clean and solid.`
 
     const response = await openai.images.generate({
       model: "dall-e-3",

@@ -15,6 +15,12 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'object-store.devzero.svc',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 }

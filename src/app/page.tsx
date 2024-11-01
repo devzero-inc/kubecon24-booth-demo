@@ -59,7 +59,7 @@ export default function Home() {
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-2xl font-light mb-2">Personalized Lego Minifigure</h2>
+                  <h2 className="text-2xl font-light mb-2">Personalized LEGO Minifigure</h2>
                   <p className="text-gray-400 font-light">Something for your desk to remember us after KubeCon.</p>
                 </div>
                 <svg 
@@ -74,12 +74,37 @@ export default function Home() {
             </Link>
 
             <Link 
-              href="https://devzero.io" 
+              href="/image-stream" 
               className="group p-6 bg-zinc-900 rounded-lg hover:bg-zinc-800 transition-colors"
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-2xl font-light mb-2">Visit devzero.io</h2>
+                  <h2 className="text-2xl font-light mb-2">Sweepstakes Submissions</h2>
+                  <p className="text-gray-400 font-light">See what LEGO Minifigures others are creating!</p>
+                </div>
+                <svg 
+                  className="w-6 h-6 text-gray-400 group-hover:translate-x-2 transition-transform" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            </Link>
+
+            <Link 
+              href="https://devzero.io" 
+              target="_blank"
+              className="group p-6 bg-zinc-900 rounded-lg hover:bg-zinc-800 transition-colors"
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-2xl font-light mb-2">
+                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+                      devzero.io
+                    </span>
+                  </h2>
                   <p className="text-gray-400 font-light">Check out our website.</p>
                 </div>
                 <svg 

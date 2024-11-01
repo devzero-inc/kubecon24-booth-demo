@@ -139,7 +139,7 @@ export function ImageUploader() {
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const response = await fetch('/api/submit-form', {
+      const response = await fetch('/api/submit-lego-sweepstakes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -303,8 +303,8 @@ export function ImageUploader() {
               </button>
 
               <div>
-                <h3 className="text-2xl font-light text-white mb-2">Submit Your LEGO Minifigure</h3>
-                <p className="text-gray-400 text-sm">Please provide your shipping details</p>
+                <h3 className="text-2xl font-light text-white mb-2">Enter LEGO Minifigure Sweepstakes</h3>
+                <p className="text-gray-400 text-sm">Please provide your shipping details - we'll send you your LEGO!</p>
               </div>
 
               <form onSubmit={handleFormSubmit} className="space-y-4">
@@ -349,7 +349,7 @@ export function ImageUploader() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="email" className="text-gray-200">Email</Label>
+                  <Label htmlFor="email" className="text-gray-200">Company Email</Label>
                   <Input
                     id="email"
                     name="email"
