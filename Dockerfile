@@ -35,10 +35,6 @@ RUN corepack enable && corepack prepare yarn@stable --activate
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-COPY --from=builder --chown=nextjs:nodejs /app/package.json /app/yarn.lock ./
-
-# Install production dependencies only
-RUN yarn install --production --frozen-lockfile --network-timeout 100000
 
 # Switch to non-root user
 USER nextjs
