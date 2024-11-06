@@ -1,22 +1,22 @@
-import { Suspense } from 'react'
 import { ImageStream } from '@/components/ImageStream'
 import { getImageData } from '@/lib/data'
-import Link from 'next/link'
 import Image from 'next/image'
+import Link from 'next/link'
+import { Suspense } from 'react'
 
 export const revalidate = 60 // Revalidate this page every 60 seconds
 
-async function InitialImagesFetch() {
+// Separate async component for fetching data
+async function ImageStreamContent() {
   const result = await getImageData(1, 20) // Fetch first 20 images
   if (!result) {
-    return {
-      notFound: true,
-    }
+    return <div className="text-center text-white">No images found</div>
   }
   return <ImageStream initialImages={result.images} initialPagination={result.pagination} />
 }
 
-export default function ImageStreamPage() {
+// Main page component
+export default async function ImageStreamPage() {
   return (
     <main className="min-h-screen bg-black relative">
         {/* Logo Container */}
@@ -65,7 +65,7 @@ export default function ImageStreamPage() {
           </span>
         </h1>
         <Suspense fallback={<div className="text-center text-white">Loading...</div>}>
-          <InitialImagesFetch />
+          <ImageStreamContent />
         </Suspense>
       </div>
     </main>
