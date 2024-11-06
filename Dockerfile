@@ -8,8 +8,8 @@ RUN corepack enable && corepack prepare yarn@1.22.22 --activate
 # Copy package files
 COPY package.json yarn.lock ./
 
-# Install dependencies with yarn
-RUN yarn install --immutable --network-timeout 100000
+# Install prod dependencies with yarn
+RUN yarn install  --immutable --network-timeout 100000
 
 # Copy source code
 COPY . .
@@ -35,10 +35,6 @@ RUN corepack enable && corepack prepare yarn@stable --activate
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-COPY --from=builder --chown=nextjs:nodejs /app/package.json /app/yarn.lock ./
-
-# Install production dependencies only
-RUN yarn install --production --frozen-lockfile --network-timeout 100000
 
 # Switch to non-root user
 USER nextjs
