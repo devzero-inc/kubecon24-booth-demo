@@ -1,23 +1,57 @@
 'use server'
 
+import { z } from 'zod'
+import { Resend } from 'resend'
+import clientPromise from '../lib/mongodb'
+
+const resend = new Resend(process.env.RESEND_API_KEY)
+
+const schema = z.object({
+  name: z.string().min(1),
+  email: z.string().email(),
+  company: z.string().min(1),
+  jobTitle: z.string().min(1),
+})
+
 export async function submitForm(formData: FormData) {
-  // Simulate a delay
-  await new Promise(resolve => setTimeout(resolve, 1000))
-
-  // Here you would typically save the form data to a database
-  // and perhaps send an email notification
-
-  // Get the selected options
-  const selectedOptions = formData.getAll('options')
-
-  // For now, we'll just log the data
-  console.log({
-    firstName: formData.get('firstName'),
-    lastName: formData.get('lastName'),
-    companyName: formData.get('companyName'),
+  const validatedFields = schema.safeParse({
+    name: formData.get('name'),
     email: formData.get('email'),
-    selectedOptions: selectedOptions,
+    company: formData.get('company'),
+    jobTitle: formData.get('jobTitle'),
   })
 
-  return { message: 'Form submitted successfully!' }
+  if (!validatedFields.success) {
+    return { error: 'Invalid fields' }
+  }
+
+  const { name, email, company, jobTitle } = validatedFields.data
+
+  try {
+    // Connect to MongoDB
+    const client = await clientPromise
+    const db = client.db('kubecon_booth')
+
+    // Insert data into demo-submissions collection
+    await db.collection('demo-submissions').insertOne({
+      name,
+      email,
+      company,
+      jobTitle,
+      createdAt: new Date()
+    })
+
+    // Send email (existing functionality)
+    await resend.emails.send({
+      from: 'onboarding@resend.dev',
+      to: email,
+      subject: 'Welcome to KubeCon!',
+      html: `<p>Hello ${name},</p><p>Welcome to KubeCon! We're excited to have you join us.</p>`,
+    })
+
+    return { success: true }
+  } catch (error) {
+    console.error('Error in submitForm:', error)
+    return { error: 'Failed to submit form' }
+  }
 }
