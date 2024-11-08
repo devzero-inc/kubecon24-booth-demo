@@ -5,28 +5,64 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
-import { submitForm } from '../app/actions'
 import SafeClientWrapper from './safe-client-wrapper'
 
 export function LandingForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitMessage, setSubmitMessage] = useState('')
+  const [error, setError] = useState('')
+  const [success, setSuccess] = useState(false)
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     setIsSubmitting(true)
-    setSubmitMessage('')
+    setError('')
+    setSuccess(false)
 
-    const formData = new FormData(event.currentTarget)
-    const result = await submitForm(formData)
+    const formData = new FormData(e.currentTarget)
+    const firstName = formData.get('firstName') as string
+    const lastName = formData.get('lastName') as string
+    const companyName = formData.get('companyName') as string
+    const email = formData.get('email') as string
+    const options = formData.getAll('options') as string[]
 
-    setIsSubmitting(false)
-    setSubmitMessage(result.message)
+    const formValues = {
+      name: `${firstName} ${lastName}`,
+      email,
+      company: companyName,
+      jobTitle: 'Not Provided',
+      options
+    }
+
+    try {
+      const response = await fetch('/api/submit-landing-form', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formValues),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        console.log('Form submission successful:', data)
+        setSuccess(true)
+        e.currentTarget.reset() // Reset form fields
+      } else {
+        console.error('Form submission failed:', data)
+        setError(data.error || 'An error occurred. Please try again.')
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error)
+      setError('An error occurred. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const options = [
     { id: "option1", label: "Dev Environments (with Docker)" },
-    { id: "option1", label: "Dev Environments (with Kubernetes)" },
+    { id: "option2", label: "Dev Environments (with Kubernetes)" },
     { id: "option3", label: "Developer Experience Index (DXI)" },
     { id: "option4", label: "GitHub Actions (just faster and cheaper)" },
   ]
@@ -69,6 +105,17 @@ export function LandingForm() {
               id="companyName" 
               name="companyName" 
               placeholder="Acme Inc." 
+              required 
+              className="bg-zinc-800 border-zinc-700 text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-transparent font-light" 
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="jobTitle" className="text-gray-200 text-sm font-light">Job Title</Label>
+            <Input 
+              id="jobTitle" 
+              name="jobTitle" 
+              placeholder="Staff Technophilosopher" 
               required 
               className="bg-zinc-800 border-zinc-700 text-white placeholder-zinc-500 focus:ring-2 focus:ring-white focus:border-transparent font-light" 
             />
@@ -117,10 +164,17 @@ export function LandingForm() {
           {isSubmitting ? 'Submitting...' : 'Get More Details'}
         </Button>
 
-        {submitMessage && (
-          <p className="text-sm text-center text-gray-200 bg-zinc-800 rounded-lg py-2 px-4">
-            {submitMessage}
+        {error && (
+          <p className="text-sm text-center text-red-500 bg-zinc-800 rounded-lg py-2 px-4">
+            {error}
           </p>
+        )}
+
+        {success && (
+          <div className="text-sm text-center text-green-500 bg-zinc-800 rounded-lg py-2 px-4">
+            <p>Thank you for your interest!</p>
+            <p>An email with more details has been sent to your inbox.</p>
+          </div>
         )}
       </form>
     </SafeClientWrapper>
