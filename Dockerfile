@@ -8,6 +8,8 @@ RUN corepack enable && corepack prepare yarn@1.22.22 --activate
 # Copy package files
 COPY package.json yarn.lock ./
 
+COPY .env.local.example .env.local
+
 # Install dependencies with yarn
 RUN yarn install --immutable --network-timeout 100000
 
