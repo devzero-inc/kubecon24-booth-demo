@@ -40,9 +40,6 @@ export function CalendlyModal() {
         </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[800px] h-[80vh]">
-        <DialogHeader>
-          <DialogTitle>Meet the DevZero Team Post-KubeCon</DialogTitle>
-        </DialogHeader>
         <div 
           className="calendly-inline-widget w-full h-full"
           data-url="https://calendly.com/d/cppv-8t7-rwq/meet-the-devzero-team-post-kubecon?month=2024-11"
