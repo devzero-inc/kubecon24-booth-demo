@@ -23,6 +23,7 @@ interface FormData {
 export function ImageUploader() {
   const [isDragging, setIsDragging] = useState(false)
   const [uploadedImage, setUploadedImage] = useState<string | null>(null)
+  const [b64UploadedImage, setB64UploadedImage] = useState<string | null>(null)
   const [generatedImage, setGeneratedImage] = useState<string | null>(null)
   const [generatedImageId, setGeneratedImageId] = useState<string | null>(null)
   const [description, setDescription] = useState<string | null>(null)
@@ -65,6 +66,7 @@ export function ImageUploader() {
       reader.readAsDataURL(file)
 
       const base64Image = await getBase64(file)
+      setB64UploadedImage(base64Image)
 
       const descriptionResponse = await fetch('/api/describe-image', {
         method: 'POST',
@@ -146,8 +148,8 @@ export function ImageUploader() {
         },
         body: JSON.stringify({
           formData,
-          imageUrl: uploadedImage,
-          generatedImageId,
+          originalImageB64: b64UploadedImage,
+          generatedImageId: generatedImageId,
         }),
       })
 

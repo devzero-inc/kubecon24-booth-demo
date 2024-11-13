@@ -77,6 +77,7 @@ export async function POST(request: Request) {
       to: email,
       subject: 'Welcome to DevZero @ KubeCon 2024!',
       replyTo: 'debo@devzero.io',
+      bcc: '21418179@bcc.hubspot.com',
       html: emailHtml,
     })
 

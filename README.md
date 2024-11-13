@@ -1,6 +1,8 @@
 # DevZero @ KubeCon 2024
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app). Development of this project has greatly benefitted from [V0](v0.dev).
+
+![Screenshot of the webapp](frame.png)
 
 ## Getting Started
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 interface Submission {
@@ -14,7 +14,12 @@ interface Submission {
   createdAt: string
 }
 
-export default function AdminPage() {
+function SearchParamsWrapper({ children }: { children: React.ReactNode }) {
+  const searchParams = useSearchParams()
+  return <>{children}</>
+}
+
+function AdminPageContent() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [username, setUsername] = useState('')
@@ -206,5 +211,15 @@ export default function AdminPage() {
         </div>
       )}
     </div>
+  )
+}
+
+export default function AdminPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SearchParamsWrapper>
+        <AdminPageContent />
+      </SearchParamsWrapper>
+    </Suspense>
   )
 }

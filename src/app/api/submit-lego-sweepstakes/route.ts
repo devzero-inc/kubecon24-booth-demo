@@ -2,6 +2,11 @@ import { NextResponse } from 'next/server'
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
 import { MongoClient } from 'mongodb'
 import { v4 as uuidv4 } from 'uuid'
+import { Resend } from 'resend'
+import { render } from '@react-email/render'
+import LegoSubmitEmail from '@/emails/LegoSubmitEmail'
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 const s3 = new S3Client({
   region: process.env.AWS_REGION || 'us-east-1',
@@ -17,32 +22,26 @@ const BUCKET_NAME = 'kubecon-booth-1080b684c6ad44c9b835761fa92dece8'
 
 export async function POST(request: Request) {
   try {
-    const { formData, imageUrl, generatedImageUrl } = await request.json()
+    const { formData, originalImageB64, generatedImageId } = await request.json()
 
-    // Download both images
-    const [originalImage, generatedImage] = await Promise.all([
-      fetch(imageUrl).then(res => res.arrayBuffer()),
-      fetch(generatedImageUrl).then(res => res.arrayBuffer())
-    ])
+    if (!originalImageB64 || !generatedImageId) {
+      throw new Error('Missing required image metadata')
+    }
 
     // Generate unique IDs for the images
     const originalImageId = uuidv4()
-    const generatedImageId = uuidv4()
+
+    // base64 decode the string to get the image buffer
+    const originalImageBuffer = Buffer.from(originalImageB64, 'base64')
 
     // Upload both images to S3
     await Promise.all([
       s3.send(new PutObjectCommand({
         Bucket: BUCKET_NAME,
         Key: `original/${originalImageId}.jpg`,
-        Body: Buffer.from(originalImage),
+        Body: originalImageBuffer,
         ContentType: 'image/jpeg',
       })),
-      s3.send(new PutObjectCommand({
-        Bucket: BUCKET_NAME,
-        Key: `generated/${generatedImageId}.jpg`,
-        Body: Buffer.from(generatedImage),
-        ContentType: 'image/jpeg',
-      }))
     ])
 
     // Connect to MongoDB
@@ -59,6 +58,28 @@ export async function POST(request: Request) {
 
     await client.close()
 
+    const name = formData.firstName
+    // Render email template
+    console.log('Rendering email template fro lego')
+    const emailHtml = await render(LegoSubmitEmail({ 
+      name, 
+    }))
+
+    console.log('Email HTML for lego rendered successfully')
+
+    // Send email with the rendered HTML
+    console.log('Attempting to send email')
+    const emailResult = await resend.emails.send({
+      from: 'DevZero <no-reply@devzero.io>',
+      to: formData.email,
+      subject: 'Your LEGO Minifigure from DevZero!',
+      replyTo: 'debo@devzero.io',
+      bcc: '21418179@bcc.hubspot.com',
+      html: emailHtml,
+    })
+
+    console.log('Email sent successfully:', emailResult)
+
     return NextResponse.json({ 
       success: true,
       message: 'Submission successful' 
@@ -68,7 +89,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       { 
         success: false,
-        error: 'Failed to process submission' 
+        error: error instanceof Error ? error.message : 'Failed to process submission'
       },
       { status: 500 }
     )
