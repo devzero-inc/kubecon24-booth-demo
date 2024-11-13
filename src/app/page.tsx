@@ -53,6 +53,8 @@ export default function Home() {
               </div>
             </Link>
 
+            <CalendlyModal />
+
             <Link 
               href="/kubecon-booth" 
               className="group p-6 bg-zinc-900 rounded-lg hover:bg-zinc-800 transition-colors"
@@ -92,8 +94,6 @@ export default function Home() {
                 </svg>
               </div>
             </Link>
-            
-            <CalendlyModal />
 
             <Link 
               href="/image-stream" 
