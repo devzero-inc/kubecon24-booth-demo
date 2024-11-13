@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: dz-arc-controller-demo
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
