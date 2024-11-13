@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { CalendlyModal } from "@/components/calendly-modal"
+import { Gift } from 'lucide-react'
 
 export default function Home() {
   return (
@@ -34,6 +35,24 @@ export default function Home() {
           </div>
 
           <nav className="grid gap-4">
+          <Link 
+              href="https://www.linkedin.com/company/devzerohq/events/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group p-6 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg hover:from-purple-500 hover:to-pink-500 transition-colors relative overflow-hidden"
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-2xl font-light mb-2">Win a LEGO Set</h2>
+                  <p className="text-white font-light">Signup for a demo session to win a full LEGO set (Hogwarts, Infinity Gauntlet, Titanic).</p>
+                </div>
+                <Gift className="w-6 h-6 text-white group-hover:scale-110 transition-transform" />
+              </div>
+              <div className="absolute top-0 right-0 bg-yellow-400 text-black text-xs font-bold px-2 py-1 rounded-bl-lg">
+                DEMO
+              </div>
+            </Link>
+
             <Link 
               href="/kubecon-booth" 
               className="group p-6 bg-zinc-900 rounded-lg hover:bg-zinc-800 transition-colors"
