@@ -30,7 +30,7 @@ export async function submitForm(formData: FormData) {
   try {
     // Connect to MongoDB
     const client = await clientPromise
-    const db = client.db('kubecon_booth')
+    const db = client.db('kubecon-booth')
 
     // Insert data into demo-submissions collection
     await db.collection('demo-submissions').insertOne({

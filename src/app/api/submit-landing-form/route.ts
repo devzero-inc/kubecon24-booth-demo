@@ -9,19 +9,19 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 const optionDetails: { [key: string]: { label: string, url: string } } = {
   "option1": {
     label: "Dev Environments (with Docker)",
-    url: "https://devzero.io/foo"
+    url: "https://www.devzero.io/docs/getting-started/quickstart"
   },
   "option2": {
     label: "Dev Environments (with Kubernetes)",
-    url: "https://devzero.io/bar"
+    url: "https://www.devzero.io/docs/workspaces/kubernetes-cluster"
   },
   "option3": {
     label: "Developer Experience Index (DXI)",
-    url: "https://devzero.io/baz"
+    url: "https://www.devzero.io/blog/beyond-dora-metrics-uber-devzero-oda"
   },
   "option4": {
     label: "GitHub Actions (just faster and cheaper)",
-    url: "https://devzero.io/bum"
+    url: "https://www.devzero.io/docs/how-to-guides/ci/run-github-actions-in-a-devbox"
   }
 }
 
@@ -41,7 +41,7 @@ export async function POST(request: Request) {
 
     // Connect to MongoDB
     const client = await clientPromise
-    const db = client.db('kubecon_booth')
+    const db = client.db('kubecon-booth')
 
     // Insert data into demo-submissions collection
     await db.collection('demo-submissions').insertOne({
