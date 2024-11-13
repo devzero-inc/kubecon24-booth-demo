@@ -7,13 +7,9 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 First, run the development server:
 
 ```bash
-npm run dev
-# or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# and/or
+yarn build # && yarn start
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -24,15 +20,19 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+This project is run entirely on [DevZero](devzero.io). 
+It uses the following components:
+1. Docker (on DevZero), to host a MongoDB database
+ - `docker run --name mongodb -e MONGO_INITDB_DATABASE=admin -e MONGO_INITDB_ROOT_USERNAME=my-root-user -e MONGO_INITDB_ROOT_PASSWORD=verymongodbpassword -p 27017:27017 -d mongodb/mongodb-community-server:8.0-ubuntu2204`
+ - Resulting URI for `MONGODB_URI` env var in `.env.local`: `mongodb://my-root-user:verymongodbpassword@localhost:27017`
+2. DevZero Object Storage (S3-compatible API)
+ - See [these docs](https://www.devzero.io/docs/devzero-storage/object-storage)
+3. Node.js etc to run the main application
+4. OpenAI key for image description and image generation
+5. Resend API key for sending emails.
+6. `JWT_SECRET`, `ADMIN_USERNAME`, `ADMIN_PASSWORD` to view the `/admin` page.
+7. `dz net funnel` to expose the app to the public internet.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## KubeCon 2024 - Salt Lake City, UT, USA
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+During the conference (and maybe after?), this app will be available at https://worthy-yak-jiit.team-03f3f9b48aa3465ca-9f8c8bfece3b44ac97103ab79e495aa0.dv0.io

@@ -9,19 +9,22 @@ import SafeClientWrapper from './safe-client-wrapper'
 
 export function LandingForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [error, setError] = useState('')
-  const [success, setSuccess] = useState(false)
+  const [submitMessage, setSubmitMessage] = useState('')
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsSubmitting(true)
-    setError('')
-    setSuccess(false)
+    setSubmitMessage('')
+    setSuccess(false);
+    setError('');
 
     const formData = new FormData(e.currentTarget)
     const firstName = formData.get('firstName') as string
     const lastName = formData.get('lastName') as string
     const companyName = formData.get('companyName') as string
+    const jobTitle = formData.get('jobTitle') as string
     const email = formData.get('email') as string
     const options = formData.getAll('options') as string[]
 
@@ -29,7 +32,7 @@ export function LandingForm() {
       name: `${firstName} ${lastName}`,
       email,
       company: companyName,
-      jobTitle: 'Not Provided',
+      jobTitle: jobTitle,
       options
     }
 
@@ -47,14 +50,24 @@ export function LandingForm() {
       if (response.ok) {
         console.log('Form submission successful:', data)
         setSuccess(true)
-        e.currentTarget.reset() // Reset form fields
+        setError('') // Clear any existing error
+
+        // Reset the form
+        const formElement = e.target as HTMLFormElement;
+        formElement.reset();
+        
+        setSubmitMessage(data.message);
       } else {
         console.error('Form submission failed:', data)
+        setSuccess(false) // Ensure success is false
         setError(data.error || 'An error occurred. Please try again.')
+        setSubmitMessage(data.message);
       }
     } catch (error) {
       console.error('Error submitting form:', error)
+      setSuccess(false) // Ensure success is false
       setError('An error occurred. Please try again.')
+      setSubmitMessage('An error occurred. Please try again.');
     } finally {
       setIsSubmitting(false)
     }
@@ -173,7 +186,7 @@ export function LandingForm() {
         {success && (
           <div className="text-sm text-center text-green-500 bg-zinc-800 rounded-lg py-2 px-4">
             <p>Thank you for your interest!</p>
-            <p>An email with more details has been sent to your inbox.</p>
+            <p>We'll email you soon.</p>
           </div>
         )}
       </form>
