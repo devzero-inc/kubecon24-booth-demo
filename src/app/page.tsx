@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { CalendlyModal } from "@/components/calendly-modal"
 
 export default function Home() {
   return (
@@ -72,6 +73,8 @@ export default function Home() {
                 </svg>
               </div>
             </Link>
+            
+            <CalendlyModal />
 
             <Link 
               href="/image-stream" 
