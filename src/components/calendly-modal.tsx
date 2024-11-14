@@ -32,8 +32,8 @@ export function CalendlyModal() {
         <div className="group p-6 bg-zinc-900 rounded-lg hover:bg-zinc-800 transition-colors cursor-pointer border-2 border-green-500 hover:border-green-400">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-2xl font-light mb-2 text-white">Schedule a Meeting</h2>
-              <p className="text-gray-400 font-light">Meet the DevZero Team Post-KubeCon</p>
+              <h2 className="text-2xl font-light mb-2 text-white">Get a LEGO office set with your LEGO Minifigure</h2>
+              <p className="text-gray-400 font-light">Find some time with DevZero team post-KubeCon.</p>
             </div>
             <Calendar className="w-6 h-6 text-green-500 group-hover:scale-110 transition-transform" />
           </div>
