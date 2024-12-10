@@ -1,6 +1,6 @@
 # DevZero @ KubeCon 2024
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app). Development of this project has greatly benefitted from [V0](v0.dev).
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app). Development of this project has greatly benefitted from [V0](https://v0.dev).
 
 ![Screenshot of the webapp](frame.png)
 
@@ -22,7 +22,7 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 
 ## Learn More
 
-This project is run entirely on [DevZero](devzero.io). 
+This project is run entirely on [DevZero](https://devzero.io). 
 It uses the following components:
 1. Docker (on DevZero), to host a MongoDB database
  - `docker run --name mongodb -e MONGO_INITDB_DATABASE=admin -e MONGO_INITDB_ROOT_USERNAME=my-root-user -e MONGO_INITDB_ROOT_PASSWORD=verymongodbpassword -p 27017:27017 -d mongodb/mongodb-community-server:8.0-ubuntu2204`
