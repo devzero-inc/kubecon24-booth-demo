@@ -73,11 +73,10 @@ export async function POST(request: Request) {
     // Send email with the rendered HTML
     console.log('Attempting to send email')
     const emailResult = await resend.emails.send({
-      from: 'DevZero <no-reply@devzero.io>',
+      from: 'DevZero <no-reply@kubecon.devzero.io>',
       to: email,
       subject: 'Welcome to DevZero @ KubeCon 2024!',
       replyTo: 'debo@devzero.io',
-      bcc: '21418179@bcc.hubspot.com',
       html: emailHtml,
     })
 

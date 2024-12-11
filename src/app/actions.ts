@@ -43,7 +43,7 @@ export async function submitForm(formData: FormData) {
 
     // Send email (existing functionality)
     await resend.emails.send({
-      from: 'kubecon@devzero.io',
+      from: 'kubecon@kubecon.devzero.io',
       to: email,
       subject: 'Welcome to KubeCon!',
       html: `<p>Hello ${name},</p><p>Welcome to KubeCon! We're excited to have you join us.</p>`,
