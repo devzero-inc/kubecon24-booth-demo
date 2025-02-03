@@ -8,8 +8,18 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: self-hosted
+  build-with-github-hosted-runner:
+    name: Build with GitHub hosted runners
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Build Docker image
+        run: docker build -t nextjs-app:latest .
+
+  build-with-devzero-hosted-runner:
+    name: Build with DevZero hosted runners
+    runs-on: devzero-ubuntu-24.04
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
