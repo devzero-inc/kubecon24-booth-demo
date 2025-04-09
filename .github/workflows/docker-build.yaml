@@ -19,7 +19,7 @@ jobs:
 
   build-with-devzero-hosted-runner:
     name: Build with DevZero hosted runners
-    runs-on: devzero-ubuntu-24.04
+    runs-on: devzero-ubuntu-24.04-large
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
